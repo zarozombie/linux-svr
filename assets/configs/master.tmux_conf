@@ -1,0 +1,38 @@
+#this is a new session template
+#new-session -s MainSession -n FirstWindow 'htop'
+
+#how to split window and create pane
+#split-window -v
+
+####################################
+
+#session 1 MainSession
+new-session -s MainSession -n htop 'htop'
+
+new-window -n settings
+send-keys 'aliases' KPEnter
+split-window -v
+send-keys 'tmuxe' KPEnter
+
+####################################
+
+#session 2 template
+new-session -s DEV -n foo 'dev' 
+split-window -v
+#send-keys 'pwsh' KPEnter
+
+###Session 2 Windows
+## window 2
+#new-window -n log
+#send-keys '/home/user/programming/shell/script/log.sh' KPEnter
+#split-window -v
+#send-keys 'vim /home/user/programming/pwsh/scripts/daydetailparsejson.ps1' KPEnter
+
+####################################
+
+## window 3
+#new-window -n settings
+#send-keys 'vim ~/.config/powershell/Microsoft.PowerShell_profile.ps1' KPEnter
+#split-window -v
+#send-keys 'vim /home/user/programming/pwsh/scripts/variables.ps1' KPEnter
+set -g mouse on

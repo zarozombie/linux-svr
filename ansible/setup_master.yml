@@ -1,0 +1,38 @@
+- name: Prepare Super Lab Master Node
+  hosts: masters
+  become: yes
+  tasks:
+    - name: Ensure the Superlab Volume is formatted as ext4
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/sdc  # Linode usually maps the first volume to /dev/sdb
+
+    - name: Create mount point for the volume
+      ansible.builtin.file:
+        path: /mnt/superlab
+        state: directory
+        mode: '0755'
+
+    - name: Mount the volume and add to fstab
+      ansible.builtin.mount:
+        path: /mnt/superlab
+        src: /dev/sdc
+        fstype: ext4
+        state: mounted
+
+    - name: Deploy custom bashrc and vimrc from shared assets
+      ansible.builtin.copy:
+        src: "../assets/{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes  # Creates a timestamped backup if the file changes
+      loop:
+        - { src: 'master.bash_aliases', dest: '/root/.bash_aliases' }
+        - { src: 'master.tmux_conf', dest: '/root/.tmux.conf' }
+        - { src: '/master.vimrc' , dest: '/root/.vimrc'}
+        - { src: 'common.gitconfig', dest: '/root/.gitconfig' }
+        - { src: 'common.inputrc', dest: '/root/.inputrc' }
+        - { src: 'common.journald.conf' , dest: '/etc/systemd/journald.conf' }
+        - { src: 'common.ssh_config' , dest: '/root/.ssh/config'}

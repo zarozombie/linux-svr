@@ -1,11 +1,20 @@
-# .gitignore
+# --- TERRAFORM ---
+**/.terraform/
+**/*.tfstate*
+**/*.tfplan
+**/*.tfvars
+terraform/Archive/
 
-#using terraform these files are sensitive/huge or need to be omited for clean respository
-terraform/.terraform           # The provider binaries (huge files)
-terraform/*.tfstate             # The state file (contains sensitive metadata)
-terraform/*.tfstate.backup      # Backups of the state
-terraform/terraform.tfvars      # Your actual secret tokens/passwords
-terraform/*.tfplan              # Binary plan files
-terraform/Archive    #archive file after testing
-terraform/*.tfvars
+# --- ANSIBLE ---
+*.retry
+.ansible_cache/
+
+# --- SSH & SECRETS ---
+assets/keys/*
+!assets/keys/*.pub
+
+# --- SYSTEM & OS JUNK ---
+.DS_Store
+*.swp
+*.tmp
 

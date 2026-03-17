@@ -1,0 +1,12 @@
+# GitHub Identity
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host superlab
+    HostName 45.56.103.189
+    User root
+    IdentityFile ~/.ssh/id_superlab
+    IdentitiesOnly yes

@@ -1,8 +1,15 @@
 resource "linode_instance" "test_block" {
   label           = "terraform-node-test-01"
-  image           = "linode/debian11"
+  image           = "linode/ubuntu24.04"
+
+  #revision to image
+#  image           = "linode/debian11"
+
   region          = "us-east"
-  type            = "g6-standard-1" # 2GB RAM / 1 vCPU
+  type            = "g6-nanode-1"
+
+  # revision to type
+#  type            = "g6-standard-1" # 2GB RAM / 1 vCPU
 
 #safeguard agains terriform destroy
 
