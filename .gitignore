@@ -8,6 +8,7 @@ terraform/Archive/
 # --- ANSIBLE ---
 *.retry
 .ansible_cache/
+ansible/inventory.ini
 
 # --- SSH & SECRETS ---
 assets/keys/*

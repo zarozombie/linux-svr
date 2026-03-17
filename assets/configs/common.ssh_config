@@ -10,3 +10,11 @@ Host superlab
     User root
     IdentityFile ~/.ssh/id_superlab
     IdentitiesOnly yes
+
+Host k3s
+    HostName 45.79.135.232
+    User root
+    IdentityFile ~/.ssh/id_superlab
+    IdentitiesOnly yes
+
+

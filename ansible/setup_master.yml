@@ -1,5 +1,5 @@
 - name: Prepare Super Lab Master Node
-  hosts: masters
+  hosts: k3s_agent
   become: yes
   tasks:
     - name: Ensure the Superlab Volume is formatted as ext4
@@ -22,7 +22,7 @@
 
     - name: Deploy custom bashrc and vimrc from shared assets
       ansible.builtin.copy:
-        src: "../assets/{{ item.src }}"
+        src: "../assets/configs/{{ item.src }}"
         dest: "{{ item.dest }}"
         owner: root
         group: root
@@ -31,8 +31,55 @@
       loop:
         - { src: 'master.bash_aliases', dest: '/root/.bash_aliases' }
         - { src: 'master.tmux_conf', dest: '/root/.tmux.conf' }
-        - { src: '/master.vimrc' , dest: '/root/.vimrc'}
+        - { src: 'master.vimrc' , dest: '/root/.vimrc'}
         - { src: 'common.gitconfig', dest: '/root/.gitconfig' }
         - { src: 'common.inputrc', dest: '/root/.inputrc' }
         - { src: 'common.journald.conf' , dest: '/etc/systemd/journald.conf' }
         - { src: 'common.ssh_config' , dest: '/root/.ssh/config'}
+
+# ##--------------------------------k3s set up
+# 
+#   vars:
+#       server_ip: "{{ hostvars[groups['k3s_server'][0]]['ansible_host'] }}"
+#       token: "{{ hostvars[groups['k3s_server'][0]]['k3s_token']['stdout'] }}"
+#   tasks:
+#     - name: Join Cluster
+#       ansible.builtin.shell:
+#         cmd: "curl -sfL https://get.k3s.io | K3S_URL=https://{{ server_ip }}:6443 K3S_TOKEN={{ token }} sh -"
+#         creates: /usr/local/bin/k3s
+#       environment:
+#         INSTALL_K3S_EXEC: "agent"
+# 
+# ######################################
+
+- name: Prepare Super Lab Master Node
+  hosts: k3s_server
+  become: yes
+  tasks:
+      - name: Deploy custom bashrc and vimrc from shared assets
+        ansible.builtin.copy:
+          src: "../assets/configs/{{ item.src }}"
+          dest: "{{ item.dest }}"
+          owner: root
+          group: root
+          mode: '0644'
+          backup: yes  # Creates a timestamped backup if the file changes
+        loop:
+          - { src: 'master.bash_aliases', dest: '/root/.bash_aliases' }
+          - { src: 'master.tmux_conf', dest: '/root/.tmux.conf' }
+          - { src: 'master.vimrc' , dest: '/root/.vimrc'}
+          - { src: 'common.gitconfig', dest: '/root/.gitconfig' }
+          - { src: 'common.inputrc', dest: '/root/.inputrc' }
+          - { src: 'common.journald.conf' , dest: '/etc/systemd/journald.conf' }
+          - { src: 'common.ssh_config' , dest: '/root/.ssh/config'}
+
+# ##-----------------------K3s setup
+
+#       - name: Install K3s Server on k3s server
+#         ansible.builtin.shell: 
+#           cmd: curl -sfL https://get.k3s.io | sh -
+#           creates: /usr/local/bin/k3s
+
+#       - name: Get Cluster Token
+#         ansible.builtin.shell: cat /var/lib/rancher/k3s/server/node-token
+#         register: k3s_token
