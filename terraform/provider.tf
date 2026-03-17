@@ -1,3 +1,4 @@
+#this is a good way to produce a logical seperation of concern and multi code rediness
 terraform {
   required_providers {
     linode = {
