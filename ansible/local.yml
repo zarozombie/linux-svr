@@ -1,0 +1,8 @@
+- name: Setup Control Node (Debian 13)
+  hosts: localhost
+  connection: local
+  vars:
+    admin_user: "{{ ansible_user_id }}" # Automatically picks up 'lazar'
+  roles:
+    - common
+    - local_admin # This role only handles the 'apt' installs

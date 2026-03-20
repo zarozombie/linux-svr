@@ -1,0 +1,8 @@
+- name: Install DevOps tools globally
+  ansible.builtin.apt:
+    name:
+      - tmux
+      - vim
+#      - bastet #tetris
+    state: present
+  become: yes  # This will prompt for your local sudo password

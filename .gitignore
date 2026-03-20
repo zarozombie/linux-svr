@@ -19,3 +19,24 @@ assets/keys/*
 *.swp
 *.tmp
 
+# --- packer ---
+# Packer output boxes and virtual machine files
+output-*/
+*.box
+*.ova
+*.vmdk
+*.vdi
+
+# Packer cache (where it stores the ISO after downloading)
+packer_cache/
+
+# Sensitive variable files (if you ever use them)
+*.pkrvars.hcl
+
+# --- vagrant ---
+vagrant/archive/
+vagrant/.vagrant
+# Vagrant internals
+.vagrant/
+*.log
+.env

@@ -1,0 +1,7 @@
+- name: Setup Linode Cluster (Ubuntu)
+  hosts: k3s_nodes
+  vars:
+    admin_user: "root"
+  roles:
+    - common
+    # - k3s_join

@@ -1,0 +1,38 @@
+# Set your password in PowerShell first
+pass = ENV['LAB_PASS'] || "vagrant" 
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/fedora39"
+  
+  # # SSH Identity for the Fedora Box itself
+  # config.ssh.private_key_path = "C:/Users/lazar/Documents/Dev/.ssh/id_superlab"
+  # config.ssh.insert_key = false
+
+  # Sync your Dev folder so your Linode Terraform/Ansible files are inside Fedora
+  config.vm.synced_folder "C:/Users/lazar/Documents/Dev/vmshare", "/Dev_lab"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "SuperLab-Admin-Fedora"
+    vb.gui = true
+    vb.memory = "2048"
+    vb.cpus = 2
+    # Standard Linux Graphics Fix
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+    vb.customize ["modifyvm", :id, "--vram", "128"]
+  end
+
+  # Only Private Networking for internal lab talk
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    # Set Passwords
+    echo "vagrant:#{pass}" | chpasswd
+    echo "root:#{pass}" | chpasswd
+
+    # Install Admin Tools for Linode Management
+    dnf install -y terraform ansible git openssh-clients curl
+    
+    # Ensure the vagrant user can access the synced folder properly
+    usermod -aG vboxsf vagrant
+  SHELL
+end

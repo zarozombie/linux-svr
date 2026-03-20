@@ -1,0 +1,20 @@
+- name: Prepare Super Lab Master Node
+  hosts: k3s_server
+  become: yes
+  tasks:
+      - name: Deploy custom bashrc and vimrc from shared assets
+        ansible.builtin.copy:
+          src: "../assets/configs/{{ item.src }}"
+          dest: "{{ item.dest }}"
+          owner: root
+          group: root
+          mode: '0644'
+          backup: yes  # Creates a timestamped backup if the file changes
+        loop:
+          - { src: 'master.bash_aliases', dest: '/root/.bash_aliases' }
+          - { src: 'master.tmux_conf', dest: '/root/.tmux.conf' }
+          - { src: 'master.vimrc' , dest: '/root/.vimrc'}
+          - { src: 'common.gitconfig', dest: '/root/.gitconfig' }
+          - { src: 'common.inputrc', dest: '/root/.inputrc' }
+          - { src: 'common.journald.conf' , dest: '/etc/systemd/journald.conf' }
+          - { src: 'common.ssh_config' , dest: '/root/.ssh/config'}

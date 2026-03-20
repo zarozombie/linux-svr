@@ -1,0 +1,16 @@
+- name: Deploy shared assets from ../assets/configs
+  ansible.builtin.copy:
+    src: "../../../assets/configs/{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ admin_user }}"
+    group: "{{ admin_user }}"
+    mode: '0644'
+    backup: yes
+  loop:
+    - { src: 'master.bash_aliases', dest: '/root/.bash_aliases' }
+    - { src: 'master.tmux_conf', dest: '/root/.tmux.conf' }
+    - { src: 'master.vimrc' , dest: '/root/.vimrc'}
+    - { src: 'common.gitconfig', dest: '/root/.gitconfig' }
+    - { src: 'common.inputrc', dest: '/root/.inputrc' }
+    - { src: 'common.journald.conf' , dest: '/etc/systemd/journald.conf' }
+    - { src: 'common.ssh_config' , dest: '/root/.ssh/config'}

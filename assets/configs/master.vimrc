@@ -1,3 +1,3 @@
 syntax on
 colorscheme desert
-setnu on
+set nu

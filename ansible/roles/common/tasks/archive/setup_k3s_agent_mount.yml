@@ -1,0 +1,21 @@
+- name: Prepare Super Lab Master Node
+  hosts: k3s_agent
+  become: yes
+  tasks:
+    - name: Ensure the Superlab Volume is formatted as ext4
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/sdc  # Linode usually maps the first volume to /dev/sdb
+
+    - name: Create mount point for the volume
+      ansible.builtin.file:
+        path: /mnt/superlab
+        state: directory
+        mode: '0755'
+
+    - name: Mount the volume and add to fstab
+      ansible.builtin.mount:
+        path: /mnt/superlab
+        src: /dev/sdc
+        fstype: ext4
+        state: mounted
