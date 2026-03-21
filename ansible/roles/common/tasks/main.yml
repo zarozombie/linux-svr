@@ -1,5 +1,5 @@
 - name: Install System Packages
   ansible.builtin.import_tasks: install_packages.yml
 
-- name: Setting up Congi
+- name: Setting up Config
   ansible.builtin.import_tasks: setup_config.yml

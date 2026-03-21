@@ -1,17 +1,5 @@
-- name: Deploy custom bashrc and vimrc from shared assets
-  ansible.builtin.copy:
-    src: "../assets/configs/{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: user
-    group: user
-    mode: '0644'
-    backup: yes  # Creates a timestamped backup if the file changes
-  loop:
-    - { src: 'master.bash_aliases', dest: '~/.bash_aliases' }
-    - { src: 'master.tmux_conf', dest: '~/.tmux.conf' }
-    - { src: 'master.vimrc' , dest: '~/.vimrc'}
-    - { src: 'common.gitconfig', dest: '~/.gitconfig' }
-    - { src: 'common.inputrc', dest: '~/.inputrc' }
-#       System d no writeable
-#        - { src: 'common.journald.conf' , dest: '/etc/systemd/journald.conf' }
-    - { src: 'common.ssh_config' , dest: '~/.ssh/config'}
+- name: Installing Local Packages
+  ansible.builtin.import_tasks: install_packages.yml
+
+- name: Setting up Local Config
+  ansible.builtin.import_tasks: setup_config.yml

@@ -40,3 +40,10 @@ vagrant/.vagrant
 .vagrant/
 *.log
 .env
+
+# Docker
+docker/docker-getting-started-todo-app
+docker/**/*.log
+.env
+docker/.env
+.docker-cache/

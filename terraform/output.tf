@@ -1,4 +1,5 @@
 #get ip address after creatsion
+#need to get output of both ip addresses
 output "instance_public_ip" {
   description = "The public IPv4 address of the Linode instance"
 

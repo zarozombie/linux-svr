@@ -1,8 +1,11 @@
-- name: Install DevOps tools globally
+- name: Install DevOps tools Locally
   ansible.builtin.apt:
     name:
       - tmux
       - vim
       - bastet
+      - python3
+      - pip
+      - python3-venv
     state: present
   become: yes  # This will prompt for your local sudo password
