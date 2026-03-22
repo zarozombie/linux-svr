@@ -1,0 +1,17 @@
+- name: Start Docker Container
+  hosts: k3s_server
+  vars:
+    admin_user: "root"
+  tasks:
+    - name: Deploy Webserver Container
+      community.docker.docker_container:
+        name: web-contain
+        image: crccheck/hello-world
+        state: started
+        restart_policy: always
+        
+            # Handshake: Map the ports for your web access
+        published_ports:
+          - "8000:8000"
+  # roles:
+  #   - docker

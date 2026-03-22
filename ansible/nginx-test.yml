@@ -1,0 +1,33 @@
+- name: Start Docker Container
+  hosts: k3s_server
+  become: yes
+  tasks:
+    - name: Create remote directory for Nginx
+      ansible.builtin.file:
+        path: /opt/super-lab/nginx
+        state: directory
+        mode: '0755'
+
+    - name: Copy Nginx Config and HTML to Linode
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: '0644'
+        owner: root
+        group: root
+        backup: yes  # Creates a timestamped backup if the file changes
+      loop:
+        - { src: '/media/sf_linode/linux-svr/assets/configs/nginx.conf', dest: '/opt/super-lab/nginx/nginx.conf' }
+        - { src: '/media/sf_linode/linux-svr/assets/code/html/', dest: '/opt/super-lab/nginx/html/' }
+
+    - name: Deploy Lean Nginx Container
+      community.docker.docker_container:
+        name: nginx-web
+        image: nginx:alpine
+        state: started
+        restart_policy: always
+        published_ports:
+          - "80:80"
+        volumes:
+          - "/opt/super-lab/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
+          - "/opt/super-lab/nginx/html:/usr/share/nginx/html:ro"

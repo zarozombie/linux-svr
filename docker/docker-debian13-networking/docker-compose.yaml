@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    image: zarozombie/debian12
+    ports:
+      - "8080:80"
+  myapp:
+    image: zarozombie/debian12
+    volumes:
+      - shared-vol:/app

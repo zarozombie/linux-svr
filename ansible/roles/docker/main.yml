@@ -1,0 +1,18 @@
+---
+- name: Deploy Webserver Container
+  community.docker.docker_container:
+    name: web-contain
+    image: crccheck/hello-world
+    state: started
+    restart_policy: always
+    
+        # Handshake: Map the ports for your web access
+    published_ports:
+      - "80:5000"
+        # Persistence: Mount your python code folder
+        # volumes:
+        #   - "/media/sf_linode/linux-svr/assets/code:/app/python"
+        # # Environment: Pass your non-sensitive configs
+        # env:
+        #   PYTHONUNBUFFERED: "1"
+        #   APP_ENV: "production"
