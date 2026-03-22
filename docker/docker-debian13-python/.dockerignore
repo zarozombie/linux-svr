@@ -1,0 +1,11 @@
+Dockerfile
+
+# Prevent personal git configs from entering any image
+assets/configs/common.gitconfig
+**/.gitconfig
+.git
+/assets/configs/common.ssh_config
+/assets/configs/debian.sources.list
+/assets/configs/source.bashrc
+/assets/configs/master.bash_aliases
+/assets/configs/master.tmux_config
