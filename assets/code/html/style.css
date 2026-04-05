@@ -1,0 +1,31 @@
+      
+body {
+    /* The CSS Background Handshake */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('background.jpg');
+        
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; /* Centers the image on both axes */
+    background-size: contain;    /* Scales the image to its maximum size without cropping */
+    
+    /* Text visibility fixes */
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    
+}
+
+/* Dark semi-transparent overlay */
+
+/* .dashboard {
+    background: rgba(0, 0, 0, 0.7); 
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #444;
+} */

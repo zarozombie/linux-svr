@@ -12,7 +12,7 @@ Host superlab
     IdentitiesOnly yes
 
 Host k3s
-    HostName 96.126.107.113
+    HostName 45.79.190.12
     User root
     IdentityFile ~/.ssh/id_superlab
     IdentitiesOnly yes
