@@ -1,0 +1,15 @@
+- name: Start Docker Container
+  hosts: k3s_server
+  become: yes
+  tasks:
+    - name: Copy Nginx Config and HTML to Linode
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: '0644'
+        owner: root
+        group: root
+        backup: yes  # Creates a timestamped backup if the file changes
+      loop:
+        - { src: '/media/sf_linode/linux-svr/assets/configs/nginx.conf', dest: '/opt/super-lab/nginx/nginx.conf' }
+        - { src: '/media/sf_linode/linux-svr/assets/code/html/', dest: '/opt/super-lab/nginx/html/' }
